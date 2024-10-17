@@ -30,12 +30,17 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: "https://tokenchat.netlify.app", // URL do frontend (React)
-    methods: ["GET", "POST"]
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"],
+    credentials: true // Permite enviar cookies, se necessário
   }
 });
 
 app.use(cors({
-  origin: "https://tokenchat.netlify.app" // Adicionando CORS para o backend
+  origin: "https://tokenchat.netlify.app", // Adicionando CORS para o backend
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type"],
+  credentials: true // Permite enviar cookies, se necessário
 }));
 
 let users = [];
@@ -68,6 +73,11 @@ io.on('connection', async (socket) => {
     io.emit('userList', users); // Envia a lista atualizada para todos os usuários
     console.log('Usuário desconectado:', socket.id);
   });
+});
+
+// Rota simples para testar se o servidor está rodando
+app.get('/', (req, res) => {
+  res.send("Servidor rodando!");
 });
 
 // Porta do servidor

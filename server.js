@@ -28,15 +28,15 @@ const Message = mongoose.model('Message', messageSchema);
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
-  cors: {
-    origin: "https://tokenchat.netlify.app", // URL do frontend (React)
-    methods: ["GET", "POST"],
-    allowedHeaders: ["Content-Type"],
-    credentials: true, // Permite enviar cookies, se necessário
-    transports: ['websocket', 'polling'], // Garantir que ambos WebSocket e Polling estejam permitidos
-  },
-  allowEIO3: true // Permitir versões anteriores do engine.io (compatibilidade com versões diferentes de Socket.io)
-});
+    cors: {
+      origin: "https://tokenchat.netlify.app",
+      methods: ["GET", "POST"],
+      allowedHeaders: ["Content-Type"],
+      credentials: true
+    },
+    transports: ['websocket'] // Força WebSocket no backend
+  });
+  
 
 // Middleware de CORS para Express
 app.use(cors({

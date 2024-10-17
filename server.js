@@ -18,7 +18,7 @@ mongoose.connect('mongodb+srv://leoprodutor:nuJiIYBLiS34ZsQe@chat.c0yyw.mongodb.
 const messageSchema = new mongoose.Schema({
   sender: String,
   text: String,
-  image: String, // Campo para a URL da imagem
+  image: String, // Adiciona o campo para a URL da imagem
   timestamp: { type: Date, default: Date.now }
 });
 
@@ -29,12 +29,14 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://tokenchat.netlify.app", // URL do frontend hospedado no Netlify
+    origin: "https://tokenchat.netlify.app", // URL do frontend (React)
     methods: ["GET", "POST"]
   }
 });
 
-app.use(cors());
+app.use(cors({
+  origin: "https://tokenchat.netlify.app" // Adicionando CORS para o backend
+}));
 
 let users = [];
 
@@ -42,7 +44,7 @@ let users = [];
 io.on('connection', async (socket) => {
   console.log('Novo usuário conectado:', socket.id);
 
-  // Quando o usuário se junta, envia as mensagens anteriores para ele
+  // Quando o usuário se junta, envie as mensagens anteriores para ele
   socket.on('join', async (nickname) => {
     users.push({ id: socket.id, nickname });
 
@@ -69,7 +71,7 @@ io.on('connection', async (socket) => {
 });
 
 // Porta do servidor
-const PORT = 5000;
+const PORT = process.env.PORT || 5000; // Use a variável de ambiente PORT
 server.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });

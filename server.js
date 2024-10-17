@@ -4,15 +4,14 @@ const { Server } = require('socket.io');
 const cors = require('cors');
 const mongoose = require('mongoose');
 
-// Conectando ao MongoDB Atlas
-mongoose.connect('mongodb+srv://leoprodutor:nuJiIYBLiS34ZsQe@chat.c0yyw.mongodb.net/?retryWrites=true&w=majority&appName=chat', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}).then(() => {
-  console.log("Conectado ao MongoDB Atlas");
-}).catch(err => {
-  console.error("Erro ao conectar ao MongoDB:", err);
-});
+// Conectando ao MongoDB Atlas (sem opções depreciadas)
+mongoose.connect('mongodb+srv://leoprodutor:nuJiIYBLiS34ZsQe@chat.c0yyw.mongodb.net/?retryWrites=true&w=majority&appName=chat')
+  .then(() => {
+    console.log("Conectado ao MongoDB Atlas");
+  })
+  .catch(err => {
+    console.error("Erro ao conectar ao MongoDB:", err);
+  });
 
 // Definindo o modelo de Mensagem
 const messageSchema = new mongoose.Schema({
@@ -28,15 +27,14 @@ const Message = mongoose.model('Message', messageSchema);
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
-    cors: {
-      origin: "https://tokenchat.netlify.app",
-      methods: ["GET", "POST"],
-      allowedHeaders: ["Content-Type"],
-      credentials: true
-    },
-    transports: ['websocket'] // Força WebSocket no backend
-  });
-  
+  cors: {
+    origin: "https://tokenchat.netlify.app",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"],
+    credentials: true
+  },
+  transports: ['websocket'] // Força WebSocket no backend
+});
 
 // Middleware de CORS para Express
 app.use(cors({

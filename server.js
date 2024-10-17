@@ -32,15 +32,18 @@ const io = new Server(server, {
     origin: "https://tokenchat.netlify.app", // URL do frontend (React)
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type"],
-    credentials: true // Permite enviar cookies, se necessário
-  }
+    credentials: true, // Permite enviar cookies, se necessário
+    transports: ['websocket', 'polling'], // Garantir que ambos WebSocket e Polling estejam permitidos
+  },
+  allowEIO3: true // Permitir versões anteriores do engine.io (compatibilidade com versões diferentes de Socket.io)
 });
 
+// Middleware de CORS para Express
 app.use(cors({
-  origin: "https://tokenchat.netlify.app", // Adicionando CORS para o backend
+  origin: "https://tokenchat.netlify.app", // Adicionando CORS para o frontend
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type"],
-  credentials: true // Permite enviar cookies, se necessário
+  credentials: true
 }));
 
 let users = [];

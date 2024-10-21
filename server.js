@@ -28,7 +28,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://tokenchat.netlify.app",
+    origin: "https://corp6734.netlify.app",
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type"],
     credentials: true
@@ -38,7 +38,7 @@ const io = new Server(server, {
 
 // Middleware de CORS para Express
 app.use(cors({
-  origin: "https://tokenchat.netlify.app", // Adicionando CORS para o frontend
+  origin: "https://corp6734.netlify.app", // Adicionando CORS para o frontend
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type"],
   credentials: true

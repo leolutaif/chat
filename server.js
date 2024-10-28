@@ -5,7 +5,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 
 // Conectando ao MongoDB Atlas (sem opções depreciadas)
-mongoose.connect('mongodb+srv://leoprodutor:nuJiIYBLiS34ZsQe@chatbot.c0yyw.mongodb.net/?retryWrites=true&w=majority&appName=chatbot')
+mongoose.connect(/* 'mongodb+srv://leoprodutor:nuJiIYBLiS34ZsQe@chatbot.c0yyw.mongodb.net/?retryWrites=true&w=majority&appName=chatbot' */)
   .then(() => {
     console.log("Conectado ao MongoDB Atlas");
   })
